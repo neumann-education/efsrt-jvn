@@ -1,0 +1,521 @@
+/* Variables Globales JVN */
+:root {
+  --primary-jvn: #4b0082; /* Morado JVN */
+  --dark-jvn: #2e004f; /* Púrpura Medianoche */
+  --accent-jvn: #6a0dad; /* Violeta Real */
+  --highlight-jvn: #9d50bb; /* Lavanda Intenso (para requeridos/errores) */
+  --light-gray: #f8f9fa; /* Gris Nube */
+  --border-color: #e2e8f0;
+  --text-dark: #1e293b;
+  --text-muted: #64748b;
+  --background-white: #ffffff;
+}
+
+/* Reset y Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  color: var(--text-dark);
+  background-color: var(--dark-jvn); /* Cambio a Púrpura Medianoche */
+  min-height: 100vh;
+  display: flex;
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Panel de Imagen Izquierda */
+.image-panel {
+  width: 40%;
+  background-image: url("img/img_fase01.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 10% center;
+  position: relative;
+}
+
+.image-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+}
+
+/* Panel de Formulario Derecha */
+.form-panel {
+  width: 60%;
+  background: var(--background-white);
+  padding: 3rem 5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-header {
+  margin-bottom: 2.5rem;
+}
+.form-header h1 {
+  color: var(--dark-jvn); /* Cambio a Púrpura Medianoche */
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.form-header p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* Stepper de Progreso */
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.progress-bar::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 3px;
+  width: 100%;
+  background-color: var(--border-color);
+  z-index: 1;
+}
+
+.progress-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 3px;
+  background-color: var(--primary-jvn); /* Cambio a Morado JVN */
+  z-index: 1;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.progress-step {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid var(--border-color);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.progress-step.active {
+  background-color: var(--primary-jvn); /* Cambio a Morado JVN */
+  color: white;
+  border-color: var(--primary-jvn);
+  box-shadow: 0 0 0 4px rgba(75, 0, 130, 0.2); /* Sombra en tono morado */
+}
+
+/* Lógica de Pasos (Steps) */
+.form-step {
+  display: none;
+}
+.form-step.active {
+  display: block;
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Inputs y Selección */
+.field-group {
+  margin-bottom: 1.5rem;
+}
+.field-label {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #334155;
+}
+.required-star {
+  color: var(--highlight-jvn); /* Cambio a Lavanda Intenso */
+  margin-left: 3px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  background-color: var(--light-gray);
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-jvn); /* Cambio a Morado JVN */
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(75, 0, 130, 0.1);
+}
+
+/* Opciones de Temas Dinámicos */
+.theme-option {
+  border: 1.5px solid var(--border-color);
+  padding: 1.2rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start; /* Cambio de center a flex-start para alineación superior */
+  gap: 12px;
+  transition: all 0.2s ease;
+  background-color: var(--light-gray);
+}
+
+.theme-option:hover {
+  background-color: #f5f0ff; /* Tinte morado muy claro */
+  border-color: var(--primary-jvn);
+  transform: translateY(-1px);
+}
+
+.theme-option input[type="radio"] {
+  margin: 0;
+  margin-top: 2px; /* Alinea el círculo con la primera línea de texto */
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0; /* EVITA que el círculo se aplaste o cambie de tamaño */
+  accent-color: var(--primary-jvn);
+  cursor: pointer;
+  outline: none; /* Elimina el recuadro de enfoque por defecto */
+}
+
+/* Modifica o agrega esto para limpiar el enfoque en los radio buttons */
+input[type="radio"]:focus {
+  outline: none;
+  box-shadow: none; /* Quita cualquier sombra o resplandor cuadrado */
+}
+
+/* Opcional: Si quieres que toda la tarjeta se vea seleccionada de forma limpia */
+.theme-option:has(input:checked) {
+  border-color: var(--primary-jvn);
+  background-color: #f5f0ff;
+  box-shadow: 0 0 0 1px var(--primary-jvn);
+}
+
+.theme-option span {
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Botonera */
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+}
+
+.nav-btn {
+  padding: 0.8rem 2.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+
+.btn-next {
+  background-color: var(--primary-jvn); /* Cambio a Morado JVN */
+  color: white;
+}
+
+.btn-prev {
+  background-color: #e2e8f0;
+  color: #475569;
+}
+
+.nav-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Loader y Estados Finales */
+.loader-container {
+  text-align: center;
+  display: none;
+  margin-top: 2rem;
+  padding: 2rem 0;
+}
+.progress-custom {
+  height: 10px;
+  background: #edf2f7;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary-jvn); /* Cambio a Morado JVN */
+  width: 0%;
+  transition: width 0.4s;
+}
+
+/* Responsividad */
+@media (max-width: 992px) {
+  .main-container {
+    flex-direction: column;
+    height: auto;
+  }
+  .image-panel {
+    background-position: center 25%;
+    width: 100%;
+    height: 200px;
+  }
+  .form-panel {
+    width: 100%;
+    padding: 2rem;
+  }
+}
+
+/* Estilo para la barra de progreso de SweetAlert */
+.swal2-html-container {
+  overflow: hidden;
+}
+
+.swal-progress-container {
+  width: 100%;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.swal-progress-bar {
+  width: 0%;
+  height: 10px;
+  background-color: var(--primary-jvn); /* Cambio a Morado JVN */
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.image-panel-v0 {
+  background-image: url("img/img_fase00.png");
+  background-position: 15% center;
+  background-size: cover;
+}
+
+/* =========================================
+   VARIANTES DE DISEÑO (Fase 02 y Fase 03)
+========================================= */
+
+/* 1. Ajuste para Fase 02 (Imagen a la izquierda) 
+   Desplazamos la imagen hacia la derecha para que no se "salga" por la izquierda */
+.image-panel-v2 {
+  background-image: url("img/img_fase03_fase04.png");
+  background-position: 12.5% center; /* Ajusta este % para mover el contenido a la vista */
+  background-size: 300%;
+}
+
+/* 2. Ajuste para Fase 03 (Imagen a la derecha)
+   Mantenemos el foco que ya se veía bien */
+.image-panel-v3 {
+  background-image: url("img/img_fase03_fase04.png");
+  background-position: 82.5% center; /* Foco en el otro extremo de la imagen */
+  background-size: 300%;
+}
+
+/* 2. Inversión de columnas para Fase 03 (Imagen a la derecha) */
+.main-container-reverse {
+  flex-direction: row-reverse;
+}
+@media (max-width: 992px) {
+  .main-container-reverse {
+    flex-direction: column; /* En móviles vuelve a la normalidad */
+  }
+}
+
+/* 3. Estilos de la zona de subida (Dropzone) unificados */
+.upload-area {
+  border: 2px dashed var(--primary-jvn);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  background-color: #f9f5ff; /* Fondo lavanda muy claro */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.upload-area:hover {
+  background-color: #e0efff;
+  transform: translateY(-2px); /* El efecto de elevación de Fase 03 */
+}
+
+.upload-area i {
+  font-size: 3rem;
+  color: var(--primary-jvn);
+  margin-bottom: 1rem;
+}
+
+#fileInfo {
+  margin-top: 10px;
+  font-weight: 600;
+  color: var(--dark-jvn);
+}
+
+.upload-area.dragover {
+  background-color: #f0e6ff;
+  border-color: var(--dark-jvn);
+  transform: scale(1.02);
+}
+
+/* Estilo específico para la Fase 05 */
+.image-panel-v5 {
+  background-image: url("img/img_fase05.png");
+  /* Ajustado para que la imagen se mueva un poco a la izquierda */
+  background-position: 20% center;
+  background-size: cover;
+}
+
+/* Mejora del cuadro de preview de Youtube */
+.youtube-preview {
+  margin-top: 15px;
+  padding: 1rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  display: none;
+  animation: slideUp 0.3s ease;
+}
+
+#resultCard {
+  animation: slideUp 0.5s ease forwards;
+  background: #f8fafc;
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  margin-top: 1rem;
+}
+
+#statusText {
+  font-weight: 700;
+  color: var(--dark-jvn);
+  margin-top: 10px;
+}
+
+/* --- ANIMACIONES Y ESTILOS PASO 3 (GRUPOS) --- */
+.btn-refresh {
+  background: #e2e8f0;
+  color: #475569;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.btn-refresh:hover {
+  background: #cbd5e1;
+}
+.spin {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.grupos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 400px; /* Puedes subirlo un poco de 250 a 320 para que se vean más grupos antes de scrollear */
+  overflow-y: auto;
+  padding-right: 8px; /* Espacio para que la barra de scroll no tape el contenido */
+  border: 1px solid #f1f5f9;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Opcional: Personaliza el scroll para que se vea más moderno y acorde al Morado JVN */
+.grupos-container::-webkit-scrollbar {
+  width: 6px;
+}
+.grupos-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.grupos-container::-webkit-scrollbar-thumb {
+  background: var(--primary-jvn);
+  border-radius: 10px;
+}
+
+.skeleton-loader {
+  height: 52px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 10px;
+}
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.suggest-group-btn {
+  background-color: #f8f4ff;
+  border: 1.5px dashed var(--primary-jvn);
+  color: var(--primary-jvn);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.suggest-group-btn:hover {
+  background-color: #f0e6ff;
+  border-style: solid;
+}
+.suggest-group-btn.selected {
+  background-color: var(--primary-jvn);
+  color: white;
+  border-style: solid;
+}

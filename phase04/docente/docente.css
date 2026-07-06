@@ -1,0 +1,697 @@
+/* --- START OF FILE docente.css --- */
+body,
+html {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background-color: #f8f9fa;
+}
+
+.navbar-custom {
+  height: 56px;
+  background: var(--jvn-morado); /* Morado JVN */
+}
+
+.main-container {
+  display: flex;
+  height: calc(100vh - 56px);
+}
+
+/* Panel Lateral (Lista de Estudiantes) */
+.sidebar {
+  width: 380px;
+  min-width: 380px; /* Panel más ancho */
+  flex-shrink: 0;
+  background-color: #ffffff;
+  border-right: 1px solid #dee2e6;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.student-item {
+  cursor: pointer;
+  padding: 18px 15px; /* Un poco más de aire */
+  border-bottom: 1px solid #eef2f7;
+  transition: all 0.2s ease-in-out;
+  border-left: 4px solid transparent;
+}
+
+.student-item:hover {
+  background-color: #f8fbff;
+}
+
+.student-item.active {
+  background-color: #f4ecf8; /* Fondo suave lavanda para contraste */
+  border-left: 5px solid var(--jvn-morado); /* Morado JVN */
+  box-shadow: inset 0 0 10px rgba(75, 0, 130, 0.05);
+}
+
+.student-item.active .fw-bold {
+  color: var(--jvn-morado) !important;
+}
+
+.student-item .badge {
+  letter-spacing: 0.3px;
+  padding: 5px 10px;
+  border-radius: 50px; /* Badges tipo cápsula */
+}
+
+/* Contenido Principal (Video y Evaluación) */
+.content-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background-color: #e9ecef;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 30%; /* Reducido para ocupar menos espacio */
+  height: 0;
+  background: #000;
+  flex-shrink: 0;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.evaluation-panel {
+  flex-grow: 1;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+.pregunta-box {
+  background: #fdfdfe;
+  border-left: 3px solid var(--jvn-morado); /* Morado JVN */
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.text-primary {
+  color: var(--jvn-violeta) !important; /* Violeta Real */
+}
+
+.btn-info {
+  background-color: var(--jvn-violeta) !important; /* Violeta Real */
+  border-color: var(--jvn-violeta) !important;
+}
+
+.btn-info:hover {
+  background-color: var(--jvn-medianoche) !important; /* Púrpura Medianoche */
+  border-color: var(--jvn-medianoche) !important;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6c757d;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ==========================================================================
+   PORTAL DOCENTE - INTEGRACIÓN DE SISTEMA DE LOGIN & SPLASH SCREEN
+   ========================================================================== */
+
+:root {
+  /* 1. Colores Principales (Marca JVN) */
+  --jvn-morado: #4b0082; /* Principal JVN - Cabeceras y botones principales */
+  --jvn-medianoche: #2e004f; /* Textos de énfasis, hovers y sombras */
+  --jvn-violeta: #6a0dad; /* Iconos, acentos de navegación y dinámicos */
+
+  /* 2. Colores de Apoyo y Contraste JVN */
+  --jvn-blanco: #ffffff; /* Fondos de tarjetas, lectura y limpieza */
+  --jvn-gris: #f8f9fa; /* Fondos secundarios y divisores */
+  --jvn-lavanda: #9d50bb; /* Alertas, errores y resaltado */
+
+  /* Variables del Sistema Mapeadas a la Paleta JVN */
+  --bgu-primary-blue: var(--jvn-morado);
+  --bgu-deep-blue: var(--jvn-medianoche);
+  --bgu-accent-blue: var(--jvn-violeta);
+  --bgu-white: var(--jvn-blanco);
+  --bgu-light-gray: var(--jvn-gris);
+  --bgu-celeste: var(--jvn-lavanda);
+  --bg-dark-navy: var(--jvn-medianoche);
+  --bg-card-dark: #1e0035; /* Tono oscuro profundo derivado de medianoche */
+  --text-primary: var(--jvn-medianoche);
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-light: #b4a4ca; /* Gris claro con tinte lavanda */
+  --border-light: #e2e8f0;
+  --bg-card: var(--jvn-blanco);
+
+  /* Colores de las Fases (Splash Orbs) */
+  --color-f1: #b4a4ca;
+  --color-f2: var(--jvn-lavanda);
+  --color-f3: var(--jvn-violeta);
+  --color-f4: var(--jvn-morado);
+  --color-f5: var(--jvn-medianoche);
+  --color-f6: #1e0035;
+
+  /* Sombras calculadas utilizando Púrpura Medianoche (rgba de #2E004F -> 46, 0, 79) */
+  --shadow-sm: 0 1px 2px 0 rgba(46, 0, 79, 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgba(46, 0, 79, 0.05), 0 2px 4px -2px rgba(46, 0, 79, 0.05);
+  --shadow-lg:
+    0 10px 15px -3px rgba(46, 0, 79, 0.06), 0 4px 6px -4px rgba(46, 0, 79, 0.04);
+  --shadow-premium:
+    0 20px 25px -5px rgba(46, 0, 79, 0.08),
+    0 8px 10px -6px rgba(46, 0, 79, 0.06);
+}
+
+/* Splash Screen Setup */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(
+    circle at center,
+    var(--bgu-primary-blue) 0%,
+    var(--bg-dark-navy) 100%
+  );
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+#splash-screen::before {
+  content: "";
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background-image: radial-gradient(rgba(27, 74, 120, 0.15) 1px, transparent 0);
+  background-size: 24px 24px;
+  transform: rotate(15deg);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.splash-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+}
+
+.orbs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 35px;
+  width: 100%;
+}
+
+.orb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out both;
+  position: relative;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.orb::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(8px);
+  opacity: 0.6;
+}
+
+.orb-f1 {
+  background-color: var(--color-f1);
+  animation-delay: -0.5s;
+}
+.orb-f2 {
+  background-color: var(--color-f2);
+  animation-delay: -0.4s;
+}
+.orb-f3 {
+  background-color: var(--color-f3);
+  animation-delay: -0.3s;
+}
+.orb-f4 {
+  background-color: var(--color-f4);
+  animation-delay: -0.2s;
+}
+.orb-f5 {
+  background-color: var(--color-f5);
+  animation-delay: -0.1s;
+}
+.orb-f6 {
+  background-color: var(--color-f6);
+  animation-delay: 0s;
+}
+
+.orb-f5,
+.orb-f6 {
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  filter: brightness(1.2);
+}
+
+.splash-title {
+  color: var(--bgu-white);
+  font-weight: 800;
+  letter-spacing: 6px;
+  font-size: 28px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 30px rgba(27, 74, 120, 0.6);
+  font-family: "Outfit", sans-serif;
+}
+
+.splash-subtitle {
+  color: var(--text-light);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+/* Progress Capsule */
+.progress-frame {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.4),
+    inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.progress-container {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    var(--bgu-primary-blue) 0%,
+    var(--bgu-celeste) 50%,
+    var(--bgu-accent-blue) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 50px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 15px rgba(157, 80, 187, 0.6); /* Brillo Lavanda Intenso (9D50BB) */
+  animation: shimmer 2s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* High-Tech Login Card styling */
+.login-bg {
+  background: radial-gradient(
+    circle at 10% 20%,
+    #f5f0fa 0%,
+    #dcd1e8 100%
+  ); /* Fondo gris con tinte lavanda */
+  position: relative;
+  overflow: hidden;
+}
+
+.login-bg::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  right: -20%;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(75, 0, 130, 0.15) 0%,
+    transparent 70%
+  ); /* Resplandor Morado JVN */
+  filter: blur(40px);
+}
+
+.login-bg::after {
+  content: "";
+  position: absolute;
+  bottom: -20%;
+  left: -20%;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(46, 0, 79, 0.1) 0%,
+    transparent 60%
+  ); /* Resplandor Púrpura Medianoche */
+  filter: blur(45px);
+}
+
+.login-card {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 30px 60px -15px rgba(10, 28, 62, 0.25) !important;
+  z-index: 10;
+  border-radius: 20px;
+}
+
+.login-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  background: linear-gradient(
+    135deg,
+    var(--bgu-primary-blue),
+    var(--bgu-accent-blue)
+  );
+  color: var(--bgu-white);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 10px 20px rgba(10, 28, 62, 0.2);
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  color: var(--bgu-accent-blue);
+  font-weight: 600;
+}
+
+.form-floating > .form-control {
+  border-radius: 12px;
+  border: 1.5px solid var(--border-light);
+  padding-left: 15px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.form-floating > .form-control:focus {
+  border-color: var(--bgu-accent-blue);
+  box-shadow: 0 0 0 4px rgba(27, 74, 120, 0.15);
+}
+
+.login-btn {
+  background: linear-gradient(
+    135deg,
+    var(--bgu-primary-blue) 0%,
+    var(--bgu-accent-blue) 100%
+  ) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 20px rgba(46, 0, 79, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  color: var(--bgu-white) !important;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(46, 0, 79, 0.3) !important;
+  filter: brightness(1.1);
+}
+
+/* Estilos para el filtro de registros */
+.btn-filtro {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 6px;
+  padding: 6px 4px;
+}
+
+.btn-filtro[data-filtro="todos"] {
+  color: var(--jvn-morado);
+  border-color: var(--jvn-morado);
+}
+.btn-filtro[data-filtro="todos"].active,
+.btn-filtro[data-filtro="todos"]:hover {
+  background-color: var(--jvn-morado);
+  color: #ffffff;
+}
+
+.btn-filtro[data-filtro="pendiente"] {
+  color: #856404;
+  border-color: #ffc107;
+}
+.btn-filtro[data-filtro="pendiente"].active,
+.btn-filtro[data-filtro="pendiente"]:hover {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.btn-filtro[data-filtro="calificado"] {
+  color: #155724;
+  border-color: #28a745;
+}
+.btn-filtro[data-filtro="calificado"].active,
+.btn-filtro[data-filtro="calificado"]:hover {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+/* --- BOTONES CUADRADOS MINIMALISTAS --- */
+.square-btn {
+  width: 115px;
+  height: 115px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 18px; /* Bordes un poco más redondeados para el grosor */
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  gap: 12px;
+  /* Grosor de borde aumentado */
+  border: 2.5px solid #e2e8f0;
+}
+
+.square-btn span {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Estilo PDF: Borde Rojo Grueso */
+.btn-pdf-minimal {
+  color: #dc3545;
+  border-color: rgba(220, 53, 69, 0.4);
+  background-color: rgba(220, 53, 69, 0.02);
+}
+
+.btn-pdf-minimal:hover {
+  border-color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 15px rgba(220, 53, 69, 0.15);
+}
+
+/* Estilo Informe IA: Borde Morado Grueso */
+.btn-ia-minimal {
+  color: var(--jvn-morado);
+  border-color: rgba(75, 0, 130, 0.4);
+  background-color: rgba(75, 0, 130, 0.02);
+}
+
+.btn-ia-minimal:hover {
+  border-color: var(--jvn-morado);
+  background-color: rgba(75, 0, 130, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 15px rgba(75, 0, 130, 0.15);
+}
+
+/* Estilo para la secuencia de flechas */
+#iconoFlecha i {
+  font-size: 0.9rem;
+  animation: pulse-arrows 1.5s infinite;
+}
+
+/* Animación opcional para las flechas */
+@keyframes pulse-arrows {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+}
+
+/* --- AGRUPACIÓN Y CONFORMIDAD --- */
+.group-container {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin: 10px;
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.group-header {
+  background-color: var(--jvn-medianoche);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bg-conforme {
+  background-color: rgba(40, 167, 69, 0.08) !important;
+  border-left: 4px solid #28a745 !important;
+}
+
+.bg-noconforme {
+  background-color: rgba(220, 53, 69, 0.08) !important;
+  border-left: 4px solid #dc3545 !important;
+}
+
+/* Evitar que el hover rompa el color de fondo en registros conformes/no conformes */
+.student-item.bg-conforme:hover {
+  background-color: rgba(40, 167, 69, 0.12) !important;
+}
+.student-item.bg-noconforme:hover {
+  background-color: rgba(220, 53, 69, 0.12) !important;
+}
+
+/* =========================================
+   EDICIÓN IN-LINE (MODO DOCENTE)
+   ========================================= */
+.editing-col-header {
+  background-color: #f3e8ff !important;
+  color: #6b21a8 !important;
+  border-bottom: 3px solid #9d50bb !important;
+}
+
+.editing-col-cell {
+  background-color: #faf5ff !important;
+  border: 1px dashed #c084fc !important;
+}
+
+.input-nota {
+  border-radius: 6px !important;
+  border: 1.5px solid #cbd5e1 !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  max-width: 75px;
+  margin: 0 auto;
+  padding: 4px 8px !important;
+  transition: all 0.15s;
+}
+
+.input-nota:focus {
+  border-color: #9d50bb !important;
+  box-shadow: 0 0 0 3px rgba(157, 80, 187, 0.15) !important;
+}
+
+.input-nota-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+  background-color: #fef2f2;
+}
+
+.nota-final-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 80px;
+  margin: 0 auto;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+}
+
+.nota-final-box-top {
+  font-size: 0.7rem;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #cbd5e1;
+  padding: 3px 5px;
+  color: #64748b;
+  line-height: 1;
+  font-weight: 600;
+  text-align: center;
+}
+
+.nota-final-box-bottom {
+  font-size: 1rem;
+  background-color: #ffffff;
+  padding: 4px 5px;
+  font-weight: 800;
+  color: var(--jvn-morado);
+  line-height: 1;
+  text-align: center;
+}
+
+.editing-col-cell .nota-final-box-bottom {
+  background-color: #fffbeb;
+}

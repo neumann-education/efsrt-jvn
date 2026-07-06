@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../img/logo_jvn.jpg" type="image/png" />
+    <title>Módulo de Registro y Estructuración (Fase 01)</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="image-panel"></div>
+      <div class="form-panel">
+        <div class="form-header">
+          <h1>Registro JVN ESFRT</h1>
+          <p>
+            Completa tu información personal, modalidad de trabajo y programa de
+            estudios.
+          </p>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-line" id="line"></div>
+          <div class="progress-step active" data-title="Datos">1</div>
+          <div class="progress-step" data-title="Modalidad">2</div>
+          <div class="progress-step" data-title="Grupo">3</div>
+          <div class="progress-step" data-title="Programa">4</div>
+          <div class="progress-step" data-title="Finalizar">5</div>
+        </div>
+
+        <form id="capstoneForm">
+          <!-- PASO 1: DATOS COMUNES -->
+          <div class="form-step active" id="step0">
+            <h2
+              class="field-label"
+              style="font-size: 1.2rem; margin-bottom: 1.5rem"
+            >
+              <i class="fa-solid fa-user"></i> Paso 1: Datos Personales
+            </h2>
+
+            <div class="field-group">
+              <label class="field-label"
+                >Nombre Completo <span class="required-star">*</span></label
+              >
+              <input
+                type="text"
+                name="nombre1"
+                id="nombre1"
+                placeholder="Nombres y Apellidos"
+                required
+              />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label"
+                >DNI <span class="required-star">*</span></label
+              >
+              <input
+                type="text"
+                name="dni"
+                id="dni"
+                placeholder="8 dígitos"
+                maxlength="8"
+                pattern="\d{8}"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                required
+              />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label"
+                >Nro. Celular <span class="required-star">*</span></label
+              >
+              <input
+                type="text"
+                name="celular"
+                id="celular"
+                placeholder="Nro. de Celular"
+                required
+              />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label"
+                >Correo Institucional
+                <span class="required-star">*</span></label
+              >
+              <input
+                type="email"
+                name="correo"
+                id="correo"
+                placeholder="ejemplo@neumann.global"
+                required
+              />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label"
+                >Sección <span class="required-star">*</span></label
+              >
+              <select
+                name="seccion"
+                id="seccion"
+                required
+                style="
+                  width: 100%;
+                  padding: 0.8rem;
+                  border: 1px solid #ccc;
+                  border-radius: 4px;
+                "
+              >
+                <option value="">Seleccione una sección</option>
+                <option value="A">Sección A</option>
+                <option value="B">Sección B</option>
+                <option value="C">Sección C</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- PASO 2: MODALIDAD -->
+          <div class="form-step" id="step1">
+            <h2
+              class="field-label"
+              style="font-size: 1.2rem; margin-bottom: 1.5rem"
+            >
+              <i class="fa-solid fa-users-viewfinder"></i> Paso 2: Modalidad de
+              Trabajo
+            </h2>
+            <div class="field-group">
+              <label class="field-label"
+                >¿Cómo harás el trabajo?
+                <span class="required-star">*</span></label
+              >
+              <div style="display: flex; flex-direction: column; gap: 0.5rem">
+                <label class="theme-option">
+                  <input type="radio" name="modalidad" value="Individual" />
+                  <span>Individual</span>
+                </label>
+                <label class="theme-option">
+                  <input type="radio" name="modalidad" value="Grupal" />
+                  <span>En Grupo</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 3: GRUPOS (Condicional) -->
+          <div class="form-step" id="step2">
+            <h2
+              class="field-label"
+              style="font-size: 1.2rem; margin-bottom: 1.5rem"
+            >
+              <i class="fa-solid fa-people-group"></i> Paso 3: Selección de
+              Grupo
+            </h2>
+            <div class="field-group">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 15px;
+                "
+              >
+                <label class="field-label" style="margin: 0"
+                  >Selecciona un grupo:</label
+                >
+                <button
+                  type="button"
+                  id="btnActualizarGrupos"
+                  class="btn-refresh"
+                >
+                  <i class="fa-solid fa-arrows-rotate" id="iconRefresh"></i>
+                  Actualizar
+                </button>
+              </div>
+
+              <!-- Contenedor Principal (Radios) -->
+              <div id="gruposContainer" class="grupos-container">
+                <!-- Skeleton Loader -->
+                <div class="skeleton-loader"></div>
+                <div class="skeleton-loader"></div>
+                <div class="skeleton-loader"></div>
+              </div>
+
+              <input type="hidden" name="grupo" id="grupoSeleccionado" />
+              <input
+                type="hidden"
+                name="esNuevoGrupo"
+                id="esNuevoGrupo"
+                value="false"
+              />
+            </div>
+          </div>
+
+          <!-- PASO 4: PROGRAMA -->
+          <div class="form-step" id="step3">
+            <h2
+              class="field-label"
+              style="font-size: 1.2rem; margin-bottom: 1.5rem"
+            >
+              <i class="fa-solid fa-graduation-cap"></i> Paso 4: Programa de
+              Estudios
+            </h2>
+            <div class="field-group">
+              <label class="field-label"
+                >Selecciona tu programa
+                <span class="required-star">*</span></label
+              >
+              <div style="display: flex; flex-direction: column; gap: 0.5rem">
+                <label class="theme-option">
+                  <input type="radio" name="programa" value="Contabilidad" />
+                  <span>Contabilidad</span>
+                </label>
+                <label class="theme-option">
+                  <input
+                    type="radio"
+                    name="programa"
+                    value="Administración de Negocios Internacionales"
+                  />
+                  <span>Administración de Negocios Internacionales</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 5: FINALIZAR -->
+          <div class="form-step" id="step4">
+            <div
+              class="loader-container"
+              id="finalLoader"
+              style="display: block"
+            >
+              <i
+                class="fa-solid fa-paper-plane fa-3x"
+                style="color: var(--primary-blue); margin-bottom: 1rem"
+              ></i>
+              <h3 id="statusText">Enviar Solicitud</h3>
+              <p id="subStatus">
+                Haz clic en el botón "FINALIZAR" para registrar tu inscripción.
+              </p>
+              <div class="progress-custom">
+                <div class="progress-fill" id="finalBar"></div>
+              </div>
+            </div>
+
+            <div
+              id="resultCard"
+              style="display: none; text-align: center"
+            ></div>
+          </div>
+
+          <div class="navigation-buttons">
+            <button
+              type="button"
+              class="nav-btn btn-prev"
+              id="prevBtn"
+              disabled
+            >
+              Anterior
+            </button>
+            <button type="button" class="nav-btn btn-next" id="nextBtn">
+              Siguiente
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      const WEB_APP_URL =
+        "https://script.google.com/macros/s/AKfycbyNZIIhvDse_JfaEu3NhOaTOvVoANkU3CMbm5ZgMDfMb_nV29VMpI3DO-mv_XhHK81b/exec";
+      let gruposGlobales = [];
+
+      let currentStep = 0;
+      const totalSteps = 5;
+      const form = document.getElementById("capstoneForm");
+      const nextBtn = document.getElementById("nextBtn");
+      const prevBtn = document.getElementById("prevBtn");
+      const steps = document.querySelectorAll(".form-step");
+      const circles = document.querySelectorAll(".progress-step");
+      const line = document.getElementById("line");
+
+      // --- EVENTO DE PRECARGA AL INICIAR LA PÁGINA ---
+      window.addEventListener("DOMContentLoaded", () => {
+        cargarGrupos(); // Llama a los grupos desde el segundo 0
+      });
+
+      // --- NUEVA VALIDACIÓN DUAL (CORREO Y DNI) ---
+      async function validarDatosPersonalesFase1() {
+        const correo = document.getElementById("correo").value.trim();
+        const dni = document.getElementById("dni").value.trim();
+
+        Swal.fire({
+          title: "Validando datos...",
+          text: "Comprobando DNI y Correo institucional.",
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading(),
+        });
+
+        try {
+          const res = await fetch(WEB_APP_URL, {
+            method: "POST",
+            body: JSON.stringify({
+              action: "validarDatosPersonales", // <--- Acción actualizada
+              data: { correo: correo, dni: dni },
+            }),
+          });
+          const json = await res.json();
+
+          if (json.status === "error") throw new Error(json.message);
+
+          await Swal.fire({
+            title: "¡Datos Disponibles!",
+            text: "Puedes continuar con el registro.",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+          return true;
+        } catch (e) {
+          Swal.fire("Error", e.message, "error");
+          return false;
+        }
+      }
+
+      function updateUI() {
+        // Lógica de saltar paso 3 (Grupos) si es Individual
+        const modalidad = document.querySelector(
+          'input[name="modalidad"]:checked',
+        )?.value;
+        if (modalidad === "Individual" && currentStep === 2) {
+          currentStep += event.target.id === "nextBtn" ? 1 : -1;
+        }
+
+        steps.forEach((step, idx) =>
+          step.classList.toggle("active", idx === currentStep),
+        );
+        circles.forEach((circle, idx) =>
+          circle.classList.toggle("active", idx <= currentStep),
+        );
+
+        line.style.width = (currentStep / (totalSteps - 1)) * 100 + "%";
+        prevBtn.disabled = currentStep === 0;
+        nextBtn.innerHTML =
+          currentStep === totalSteps - 1 ? "FINALIZAR" : "Siguiente";
+
+        const isSuccess =
+          document.getElementById("resultCard").style.display === "block";
+        nextBtn.style.display = isSuccess ? "none" : "block";
+        prevBtn.style.display = isSuccess ? "none" : "block";
+
+        if (currentStep === 2 && modalidad === "Grupal") cargarGrupos();
+      }
+
+      async function nextStepHandler(e) {
+        window.event ? window.event.preventDefault() : e.preventDefault();
+
+        // Validaciones por paso
+        if (currentStep === 0) {
+          if (!form.reportValidity()) return;
+
+          // Validación estricta del DNI de 8 dígitos
+          const dniValor = document.getElementById("dni").value.trim();
+          if (!/^\d{8}$/.test(dniValor)) {
+            return Swal.fire(
+              "Atención",
+              "El DNI debe contener exactamente 8 números.",
+              "warning",
+            );
+          }
+
+          // Validación asíncrona del correo en el servidor
+          const isDataValid = await validarDatosPersonalesFase1();
+          if (!isDataValid) return; // Si hay error, detiene el avance
+        }
+
+        if (currentStep === 1) {
+          if (!document.querySelector('input[name="modalidad"]:checked'))
+            return Swal.fire("Atención", "Seleccione una modalidad", "warning");
+        }
+
+        if (currentStep === 2) {
+          if (!document.getElementById("grupoSeleccionado").value)
+            return Swal.fire(
+              "Atención",
+              "Debe seleccionar o crear un grupo",
+              "warning",
+            );
+        }
+
+        if (currentStep === 3) {
+          if (!document.querySelector('input[name="programa"]:checked'))
+            return Swal.fire("Atención", "Seleccione un programa", "warning");
+        }
+
+        // Si todas las validaciones son correctas, avanzamos
+        if (currentStep < totalSteps - 1) {
+          currentStep++;
+          updateUI();
+        } else {
+          submitForm();
+        }
+      }
+
+      nextBtn.addEventListener("click", nextStepHandler);
+      prevBtn.addEventListener("click", () => {
+        if (currentStep > 0) {
+          currentStep--;
+          updateUI();
+        }
+      });
+
+      // LÓGICA DE GRUPOS
+      async function cargarGrupos() {
+        const container = document.getElementById("gruposContainer");
+        const icon = document.getElementById("iconRefresh");
+
+        icon.classList.add("spin"); // Iniciar giro
+
+        // Poner Skeletons de carga
+        container.innerHTML = `
+          <div class="skeleton-loader"></div>
+          <div class="skeleton-loader"></div>
+          <div class="skeleton-loader"></div>
+        `;
+
+        try {
+          const res = await fetch(WEB_APP_URL, {
+            method: "POST",
+            body: JSON.stringify({ action: "obtenerGrupos" }),
+          });
+          const json = await res.json();
+          renderizarGrupos(json.grupos || []);
+        } catch (e) {
+          container.innerHTML =
+            "<p style='color:red;'>Error al conectar. Intenta de nuevo.</p>";
+        } finally {
+          icon.classList.remove("spin"); // Detener giro
+        }
+      }
+
+      function renderizarGrupos(grupos) {
+        const container = document.getElementById("gruposContainer");
+        const esNuevoInput = document.getElementById("esNuevoGrupo");
+        const selecInput = document.getElementById("grupoSeleccionado");
+
+        container.innerHTML = "";
+
+        grupos.forEach((g) => {
+          const label = document.createElement("label");
+          label.className = "theme-option";
+
+          // Estructura limpia (sin el tooltip de integrantes)
+          label.innerHTML = `
+            <input type="radio" name="grupo_radio" value="${g.nombre}"> 
+            <div style="display: flex; justify-content: space-between; width: 100%;">
+              <span>${g.nombre}</span>
+              <small style="color: #666;">(${g.conteo} integrantes)</small>
+            </div>
+          `;
+
+          // Evento al seleccionar un grupo de la lista
+          label.addEventListener("click", () => {
+            selecInput.value = g.nombre;
+            esNuevoInput.value = "false";
+          });
+          container.appendChild(label);
+        });
+      }
+
+      document
+        .getElementById("btnActualizarGrupos")
+        .addEventListener("click", cargarGrupos);
+
+      // Lógica de exclusividad para el input de Nuevo Grupo
+      document
+        .getElementById("nuevoGrupoInput")
+        .addEventListener("input", function (e) {
+          if (this.value.trim() !== "") {
+            // 1. Deseleccionar todos los radios de la lista
+            const radios = document.getElementsByName("grupo_radio");
+            radios.forEach((r) => (r.checked = false));
+
+            // 2. Actualizar valores
+            document.getElementById("grupoSeleccionado").value =
+              this.value.trim();
+            document.getElementById("esNuevoGrupo").value = "true";
+          }
+        });
+
+      // Botón "Usar este nombre" mejorado
+      document.getElementById("btnCrearGrupo").addEventListener("click", () => {
+        const nuevo = document.getElementById("nuevoGrupoInput").value.trim();
+        if (!nuevo)
+          return Swal.fire(
+            "Atención",
+            "Escribe un nombre para el grupo",
+            "warning",
+          );
+
+        document.getElementById("grupoSeleccionado").value = nuevo;
+        document.getElementById("esNuevoGrupo").value = "true";
+
+        Swal.fire({
+          title: "Grupo Creado",
+          text: `Te registrarás en el nuevo: ${nuevo}`,
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      });
+
+      // ENVÍO FINAL
+      async function submitForm() {
+        const finalBar = document.getElementById("finalBar");
+        nextBtn.disabled = true;
+        prevBtn.disabled = true;
+        finalBar.style.width = "20%";
+
+        const payloadData = Object.fromEntries(new FormData(form).entries());
+        payloadData.grupo = document.getElementById("grupoSeleccionado").value; // Forzar el grupo
+
+        try {
+          const response = await fetch(WEB_APP_URL, {
+            method: "POST",
+            body: JSON.stringify({ action: "crearFase01", data: payloadData }),
+          });
+
+          const result = await response.json();
+          if (result.status === "success") {
+            finalBar.style.width = "100%";
+            document.getElementById("finalLoader").style.display = "none";
+            document.getElementById("resultCard").style.display = "block";
+            document.getElementById("resultCard").innerHTML = `
+              <div style="padding: 2rem;">
+                <i class="fa-solid fa-circle-check fa-4x" style="color: #22c55e; margin-bottom: 1rem;"></i>
+                <h2 style="color: var(--dark-jvn);">¡Inscripción Exitosa!</h2>
+                <p>Tu solicitud ha sido procesada correctamente.</p>
+                <button onclick="location.reload()" class="nav-btn btn-next" style="margin-top: 1.5rem; float: none;">Volver al inicio</button>
+              </div>`;
+            updateUI();
+          } else throw new Error(result.message);
+        } catch (err) {
+          finalBar.style.width = "0%";
+          nextBtn.disabled = false;
+          prevBtn.disabled = false;
+          Swal.fire("Error", err.message, "error");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../../img/logo_jvn.jpg" type="image/png" />
+    <title>Panel de Evaluación Docente - JVN</title>
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="docente.css" />
+  </head>
+  <body>
+    <!-- SPLASH SCREEN ANIMADO -->
+    <div id="splash-screen" style="display: none">
+      <div class="splash-content">
+        <div class="orbs-container">
+          <div
+            class="orb orb-f1"
+            data-bs-toggle="tooltip"
+            title="Fase 1: Base"
+          ></div>
+          <div
+            class="orb orb-f2"
+            data-bs-toggle="tooltip"
+            title="Fase 2: Prototipo"
+          ></div>
+          <div
+            class="orb orb-f3"
+            data-bs-toggle="tooltip"
+            title="Fase 3: Dictamen"
+          ></div>
+          <div
+            class="orb orb-f4"
+            data-bs-toggle="tooltip"
+            title="Fase 4: Preguntas"
+          ></div>
+          <div
+            class="orb orb-f5"
+            data-bs-toggle="tooltip"
+            title="Fase 4.1: Video"
+          ></div>
+          <div
+            class="orb orb-f6"
+            data-bs-toggle="tooltip"
+            title="Fase 4.2: Final"
+          ></div>
+        </div>
+        <h2 class="splash-title">JVN ENGINE</h2>
+        <p class="splash-subtitle" id="splash-text">
+          Estableciendo enlace seguro...
+        </p>
+        <div class="progress-frame mt-4">
+          <div class="progress-container">
+            <div
+              class="progress-bar-fill"
+              id="splash-progress"
+              style="width: 0%"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANTALLA DE LOGIN HIGH-TECH -->
+    <div
+      id="login-container"
+      class="d-flex align-items-center justify-content-center min-vh-100 login-bg"
+    >
+      <div
+        class="card p-5 border-0 login-card"
+        style="width: 100%; max-width: 440px"
+      >
+        <div class="text-center mb-4">
+          <div class="login-icon-wrapper mb-3">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3 class="fw-bold text-dark mb-1">Panel Docente</h3>
+          <p class="text-muted small">Acceso exclusivo Evaluadores JVN</p>
+        </div>
+
+        <div class="mb-3 form-floating">
+          <input
+            type="text"
+            id="login_user"
+            class="form-control"
+            placeholder="Usuario"
+            autocomplete="off"
+          />
+          <label for="login_user"
+            ><i class="fas fa-user text-muted me-2"></i>Usuario</label
+          >
+        </div>
+        <div class="mb-4 form-floating">
+          <input
+            type="password"
+            id="login_pass"
+            class="form-control"
+            placeholder="Contraseña"
+          />
+          <label for="login_pass"
+            ><i class="fas fa-lock text-muted me-2"></i>Contraseña</label
+          >
+        </div>
+        <button
+          id="btn-login"
+          class="btn btn-dark w-100 fw-bold py-3 login-btn"
+          onclick="iniciarSesion()"
+        >
+          <span class="btn-text"
+            >Autenticar Acceso <i class="fas fa-arrow-right ms-2"></i
+          ></span>
+          <span
+            class="spinner-border spinner-border-sm d-none"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD PRINCIPAL (OCULTO AL INICIO) -->
+    <div id="main-dashboard" class="d-none">
+      <!-- Navbar Adaptado para Mostrar Usuario Activo -->
+      <nav
+        class="navbar navbar-dark navbar-custom shadow-sm d-flex justify-content-between px-4 align-items-center"
+      >
+        <div class="d-flex align-items-center gap-3">
+          <span class="navbar-brand fw-bold mb-0 text-white">
+            <i class="fas fa-graduation-cap me-2"></i> JVN | Panel Docente
+          </span>
+          <!-- Selector de Vistas -->
+          <div class="btn-group" role="group">
+            <button
+              type="button"
+              class="btn btn-sm btn-light fw-bold"
+              id="btn-vista-f4"
+              onclick="cambiarVista('f4')"
+            >
+              Fase 04: Revisión IA
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-light fw-bold"
+              id="btn-vista-f5"
+              onclick="cambiarVista('f5')"
+            >
+              Fase 05: Exposición
+            </button>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <span class="text-light me-3 d-none d-sm-inline-block small">
+            <i class="fas fa-user-circle me-1 text-info"></i> Usuario:
+            <span id="logged-user" class="fw-bold text-white text-capitalize"
+              >Cargando...</span
+            >
+          </span>
+          <a
+            href="https://drive.google.com/file/d/1cYPHtk_y2nIAktoWpnKJ9EbVCk0yKXv0/view?usp=sharing"
+            target="_blank"
+            class="btn btn-sm btn-info text-white fw-bold me-2 shadow-sm"
+          >
+            <i class="fas fa-file-pdf"></i> Rúbrica
+          </a>
+          <button
+            class="btn btn-sm btn-outline-light me-2"
+            onclick="cargarDatos()"
+          >
+            <i class="fas fa-sync"></i> Actualizar
+          </button>
+          <button
+            class="btn btn-sm btn-outline-danger text-white fw-bold"
+            onclick="cerrarSesion()"
+          >
+            <i class="fas fa-sign-out-alt"></i> Salir
+          </button>
+        </div>
+      </nav>
+
+      <div class="main-container w-100 position-relative">
+        <!-- VISTA 1: FASE 04 (Tu código original modificado con el ID) -->
+        <div id="vista-fase-04" class="w-100 d-flex h-100">
+          <!-- Panel Izquierdo: Lista de Estudiantes -->
+          <div class="sidebar">
+            <!-- Se aumentó el padding (py-4) y el margen del título (mb-4) -->
+            <div class="p-3 py-4 border-bottom bg-light">
+              <h6
+                class="fw-bold mb-4 text-secondary text-uppercase"
+                style="letter-spacing: 1px; font-size: 0.75rem"
+              >
+                <i class="fas fa-users me-2 text-primary"></i>Sustentaciones
+              </h6>
+
+              <!-- Filtro de videos con margen adicional -->
+              <div
+                class="btn-group w-100 shadow-sm mb-3"
+                role="group"
+                aria-label="Filtro de videos"
+              >
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary active btn-filtro"
+                  data-filtro="todos"
+                >
+                  Todos
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-warning btn-filtro"
+                  data-filtro="pendiente"
+                >
+                  Pendientes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-success btn-filtro"
+                  data-filtro="calificado"
+                >
+                  Calificados
+                </button>
+              </div>
+
+              <!-- NUEVO: Buscador -->
+              <div class="input-group input-group-sm shadow-sm">
+                <span class="input-group-text bg-white border-end-0 text-muted"
+                  ><i class="fas fa-search"></i
+                ></span>
+                <input
+                  type="text"
+                  id="buscador"
+                  class="form-control border-start-0"
+                  placeholder="Buscar alumno, grupo, DNI, tema..."
+                />
+              </div>
+            </div>
+
+            <div id="listaEstudiantes" class="flex-grow-1 overflow-auto">
+              <div class="p-4 text-center text-muted small">
+                Cargando registros...
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel Derecho: Información y Herramientas -->
+          <div class="content-area">
+            <div id="panelVacio" class="empty-state">
+              <i
+                class="fas fa-file-alt fa-4x mb-3 text-secondary"
+                style="opacity: 0.5"
+              ></i>
+              <h4>Selecciona un registro</h4>
+              <p>
+                Haz clic en un trabajo del panel izquierdo para visualizar su
+                información y evaluarlo.
+              </p>
+            </div>
+
+            <div
+              id="panelEvaluacion"
+              class="d-none d-flex flex-column h-100 p-4"
+              style="overflow-y: auto; background: #fff"
+            >
+              <div
+                class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2"
+              >
+                <h5 class="fw-bold text-primary m-0">
+                  <i class="fas fa-user-graduate me-2"></i>Detalles del
+                  Estudiante
+                </h5>
+              </div>
+
+              <div class="row mb-4">
+                <!-- Información de registros -->
+                <div class="col-md-6 mb-3">
+                  <label class="text-muted small fw-bold"
+                    >Estudiante / Integrante 1</label
+                  >
+                  <div
+                    id="infoEstudiante"
+                    class="fw-bold text-dark border p-2 rounded bg-light"
+                  ></div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="text-muted small fw-bold">DNI</label>
+                  <div
+                    id="infoDni"
+                    class="fw-bold text-dark border p-2 rounded bg-light"
+                  ></div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="text-muted small fw-bold">Programa</label>
+                  <div
+                    id="infoPrograma"
+                    class="text-dark border p-2 rounded bg-light"
+                  ></div>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label class="text-muted small fw-bold">Sección</label>
+                  <div
+                    id="infoSeccion"
+                    class="text-dark border p-2 rounded bg-light"
+                  ></div>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label class="text-muted small fw-bold">Grupo</label>
+                  <div
+                    id="infoGrupo"
+                    class="text-dark border p-2 rounded bg-light"
+                  ></div>
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="text-muted small fw-bold"
+                    >Tema del Proyecto</label
+                  >
+                  <div
+                    id="infoTema"
+                    class="text-dark border p-2 rounded bg-light"
+                  ></div>
+                </div>
+
+                <div
+                  class="col-12 mt-4 mb-2 d-flex justify-content-center align-items-center gap-3"
+                >
+                  <!-- Botón PDF -->
+                  <a
+                    id="btnVerPDF"
+                    href="#"
+                    target="_blank"
+                    class="square-btn btn-pdf-minimal d-none"
+                  >
+                    <i class="fas fa-file-pdf fa-2x"></i>
+                    <span>Trabajo PDF</span>
+                  </a>
+
+                  <!-- Secuencia de 3 flechas/apuntes -->
+                  <div
+                    id="iconoFlecha"
+                    class="d-none d-flex gap-1 text-muted opacity-50"
+                  >
+                    <i class="fas fa-chevron-right small"></i>
+                    <i class="fas fa-chevron-right"></i>
+                    <i class="fas fa-chevron-right small"></i>
+                  </div>
+
+                  <!-- Botón Informe (Icono cambiado de robot a documento) -->
+                  <a
+                    id="btnVerInforme"
+                    href="#"
+                    target="_blank"
+                    class="square-btn btn-ia-minimal d-none"
+                  >
+                    <i class="fas fa-file-signature fa-2x"></i>
+                    <span>Informe Evaluativo - Modulo 5</span>
+                  </a>
+                </div>
+              </div>
+
+              <h5 class="fw-bold text-dark mb-3 border-bottom pb-2">
+                Evaluación Fase 04
+              </h5>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label fw-bold"
+                    >Nota <small class="text-muted">(0-20)</small></label
+                  >
+                  <input
+                    type="number"
+                    id="inputNotaF4"
+                    class="form-control text-center fw-bold form-control-lg"
+                    placeholder="00"
+                    min="0"
+                    max="20"
+                  />
+                </div>
+
+                <!-- NUEVO: Botones Tag en vez del <select> -->
+                <div class="col-md-8 mb-3">
+                  <label class="form-label fw-bold"
+                    >Conformidad del Proyecto</label
+                  >
+                  <div class="d-flex gap-2" id="tagsConformidad">
+                    <button
+                      type="button"
+                      class="btn btn-outline-success fw-bold tag-conforme flex-fill"
+                      data-val="CONFORME"
+                    >
+                      CONFORME
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger fw-bold tag-conforme flex-fill"
+                      data-val="NO_CONFORME"
+                    >
+                      NO CONFORME
+                    </button>
+                  </div>
+                </div>
+
+                <div class="col-12 mb-3">
+                  <label class="form-label fw-bold small text-secondary"
+                    >Observaciones / Feedback Académico</label
+                  >
+                  <textarea
+                    id="inputObsF4"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Escriba aquí los comentarios detallados..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <button
+                class="btn btn-success py-3 fw-bold shadow-sm mt-3 w-100"
+                onclick="enviarCalificacion()"
+              >
+                <i class="fas fa-save me-2"></i> Guardar Evaluación
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- VISTA 2: FASE 05 (Nueva vista minimalista) -->
+        <div
+          id="vista-fase-05"
+          class="w-100 h-100 bg-light p-4 d-none overflow-auto"
+        >
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold text-dark m-0">
+              <i class="fas fa-chalkboard-teacher text-primary me-2"></i>
+              Evaluación de Sustentaciones Presenciales
+            </h4>
+            <div class="d-flex align-items-center gap-3">
+              <!-- BOTONES DE EDICIÓN IN-LIVE -->
+              <button
+                id="btn-editar-notas-f5"
+                class="btn btn-warning fw-bold shadow-sm"
+                onclick="toggleEdicionNotas()"
+              >
+                <i class="fas fa-edit me-1"></i> Editar Notas
+              </button>
+              <button
+                id="btn-cancelar-notas-f5"
+                class="btn btn-outline-secondary fw-bold shadow-sm d-none"
+                onclick="cancelarEdicionNotas()"
+              >
+                <i class="fas fa-times me-1"></i> Cancelar
+              </button>
+
+              <div class="input-group shadow-sm" style="width: 250px">
+                <span class="input-group-text bg-white border-end-0 text-muted"
+                  ><i class="fas fa-search"></i
+                ></span>
+                <input
+                  type="text"
+                  id="buscador-f5"
+                  class="form-control border-start-0"
+                  placeholder="Buscar alumno..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive bg-white rounded shadow-sm border">
+            <table
+              class="table table-hover align-middle mb-0"
+              id="tabla-fase05"
+            >
+              <!-- Se llena mediante JS -->
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL EDICIÓN NOTAS FASE 5 -->
+    <div
+      class="modal fade"
+      id="modalEdicionF5"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title">Calificar Sustentación</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="edit-f5-id" />
+            <div class="mb-3">
+              <label class="form-label fw-bold">Observación Fase 04</label>
+              <textarea
+                id="edit-f5-obs4"
+                class="form-control"
+                rows="2"
+              ></textarea>
+            </div>
+            <div class="row">
+              <div class="col-4 mb-3">
+                <label class="form-label fw-bold">Nota Fase 4</label>
+                <input
+                  type="number"
+                  id="edit-f5-n4"
+                  class="form-control text-center"
+                  min="0"
+                  max="20"
+                />
+              </div>
+              <div class="col-4 mb-3">
+                <label class="form-label fw-bold text-primary"
+                  >Nota Fase 5</label
+                >
+                <input
+                  type="number"
+                  id="edit-f5-n5"
+                  class="form-control text-center border-primary"
+                  min="0"
+                  max="20"
+                />
+              </div>
+              <div class="col-4 mb-3">
+                <label class="form-label fw-bold text-success"
+                  >Nota Final</label
+                >
+                <input
+                  type="number"
+                  id="edit-f5-nf"
+                  class="form-control text-center border-success"
+                  min="0"
+                  max="20"
+                  placeholder="Auto"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary fw-bold"
+              onclick="guardarEdicionFase5()"
+            >
+              Guardar Calificación
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="docente.js"></script>
+  </body>
+</html>
