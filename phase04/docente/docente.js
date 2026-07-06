@@ -730,7 +730,10 @@ function seleccionarEstudiante(id) {
 
   // Llenar datos informativos
   $("#infoEstudiante").text(reg.integrante_1 || "N/A");
-  $("#infoDni").text((reg.dni || "").replace(/'/g, "") || "N/A");
+
+  // --- LÍNEA CORREGIDA: Convertimos a String antes de usar .replace() ---
+  const dniLimpio = String(reg.dni || "").replace(/'/g, "");
+  $("#infoDni").text(dniLimpio || "N/A");
   $("#infoPrograma").text(reg.programa || "N/A");
   $("#infoSeccion").text(reg.seccion || "N/A");
   $("#infoGrupo").text(reg.grupo || "N/A");
