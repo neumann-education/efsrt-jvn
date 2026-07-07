@@ -4,11 +4,6 @@
 const WEB_APP_URL =
   "https://script.google.com/macros/s/AKfycbyNZIIhvDse_JfaEu3NhOaTOvVoANkU3CMbm5ZgMDfMb_nV29VMpI3DO-mv_XhHK81b/exec";
 
-if (typeof temasPorPrograma === "undefined") {
-  console.error("ERROR: El archivo temas.js no se cargó correctamente");
-  window.temasPorPrograma = {};
-}
-
 let modoVistaActual = "general"; // Puede ser 'general' o 'defensa'
 let modoEdicionNotas = false; // Controla si estamos en modo edición inline
 let modoEdicionDocentes = false; // NUEVO: Controla la edición in-line de docentes
@@ -30,8 +25,6 @@ $(document).ready(function () {
   }
 });
 
-$("#edit_prog").on("change", actualizarTemas);
-
 // Opcional: Permitir iniciar sesión presionando "Enter"
 $(document).on("keypress", function (e) {
   if (e.which === 13 && $("#login-container").is(":visible")) {
@@ -39,7 +32,7 @@ $(document).on("keypress", function (e) {
   }
 });
 
-// ESCUCHAR CAMBIOS Y VALIDAR EN LOS INPUTS DE NOTAS (IN-LIVE)
+// ESCUCHAR CAMBIOS Y VALIDAR EN LOS INPUTS DE NOTAS (IN-LINE)
 $(document).on("input", ".input-nota", function () {
   const idPedido = $(this).data("id");
   const val = $(this).val().trim();
@@ -61,18 +54,23 @@ $(document).on("input", ".input-nota", function () {
   );
   const notaFinalOrig = parseFloat(regOriginal.nota_final_fase6) || 0;
 
-  const val4 = $(`input[data-id="${idPedido}"][data-tipo="n4"]`).val(); // Cambiado a n4
-  const val5 = $(`input[data-id="${idPedido}"][data-tipo="n5"]`).val();
+  // EXTRAER LAS NOTAS DE LOS INPUTS IN-LINE DE ESTA FILA
+  const val4 = $(
+    `input.input-nota[data-id="${idPedido}"][data-tipo="n4"]`,
+  ).val();
+  const val5 = $(
+    `input.input-nota[data-id="${idPedido}"][data-tipo="n5"]`,
+  ).val();
 
-  // 2. Cálculo robusto (Promedio considerando 60% - 40%)
+  // 2. Cálculo robusto (Promedio considerando 60% n4 - 40% n5)
   const calcFinal = calcularPromedio(val4, val5);
 
   let htmlTop = notaFinalOrig > 0 ? notaFinalOrig.toFixed(2) : "-";
   let htmlBottom = "-";
 
   if (calcFinal !== "") {
-    const calcFinalFix = parseFloat(calcFinal.toFixed(2));
-    htmlBottom = calcFinalFix.toFixed(2);
+    const calcFinalFix = parseFloat(calcFinal).toFixed(2);
+    htmlBottom = calcFinalFix;
 
     // 3. Cálculo de Varianza
     if (notaFinalOrig > 0) {
@@ -87,13 +85,13 @@ $(document).on("input", ".input-nota", function () {
     }
   }
 
-  // 4. Inyectar en los dos recuadros
+  // 4. Inyectar en los dos recuadros (El de la varianza arriba, y el cálculo final abajo)
   $(`#info-orig-${idPedido}`).html(htmlTop);
   $(`#calc-final-${idPedido}`).text(htmlBottom);
 });
 
-// Evento InLive para promediar
-$(".calc-nota").on("input", calcularNotaFinalInLive);
+// Evento In-Live para promediar EN EL MODAL DE EDICIÓN
+$(document).on("input", ".calc-nota", calcularNotaFinalInLive);
 
 $("#formEditar").submit(async (e) => {
   e.preventDefault();
@@ -1468,14 +1466,14 @@ async function eliminar(id) {
 // ==========================================
 // 9. Lógica de Calificaciones (Cálculos In-Live)
 // ==========================================
-
 function calcularNotaFinalInLive() {
   const val4 = $("#def_nota4").val();
   const val5 = $("#def_nota5").val();
 
   const final = calcularPromedio(val4, val5);
 
-  $("#def_nota_final").val(final !== "" ? final.toFixed(2) : "");
+  // Si la función devuelve un número, formateamos a 2 decimales
+  $("#def_nota_final").val(final !== "" ? parseFloat(final).toFixed(2) : "");
 }
 
 function calcularPromedio(val4, val5) {
@@ -1489,7 +1487,9 @@ function calcularPromedio(val4, val5) {
   const n4 = parseFloat(str4);
   const n5 = parseFloat(str5);
 
-  // Si uno de los campos está vacío, retorna el que esté lleno sin promediar
+  // Comportamiento de promediado:
+  // Si falta una nota, se muestra la que está completa pero sin aplicarle el porcentaje
+  // (Para evitar que alguien que solo tiene 20 en el trabajo salga con 12 de final)
   if (str4 !== "" && str5 === "") return isNaN(n4) ? "" : n4;
   if (str4 === "" && str5 !== "") return isNaN(n5) ? "" : n5;
 
