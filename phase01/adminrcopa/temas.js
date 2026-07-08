@@ -1,0 +1,122 @@
+const temasPorPrograma = {
+    "Bachelor of Science in Business Administration": [
+        "Propuesta de mejora para el desarrollo de habilidades de liderazgo en el equipo gerencial de [nombre de la empresa].",
+        "Estrategias de mejora en la gestión del cambio organizacional en [nombre de la empresa].",
+        "Propuesta de mejora para la implementación de estrategias de marketing digital en [nombre de la empresa].",
+        "Estrategias de posicionamiento para mejorar el desarrollo de marca en [nombre de la empresa].",
+        "Propuesta de mejora para el análisis de riesgos financieros en [nombre de la empresa].",
+        "Estrategias de optimización de inversiones en el portafolio financiero de [nombre de la empresa].",
+        "Propuesta para la creación de un ecosistema emprendedor en [nombre de la empresa/startup].",
+        "Estrategias de innovación para el desarrollo de productos en [nombre de la empresa].",
+        "Propuesta de mejora para el desarrollo del talento humano en [nombre de la empresa].",
+        "Estrategias de promoción de la diversidad e inclusión en [nombre de la empresa]."
+    ],
+    "Bachelor of Arts in Accounting": [
+        "Propuesta de mejora para la implementación de NIIF en los estados financieros de [nombre de la empresa].",
+        "Estrategias para mejorar el análisis financiero de instrumentos financieros en [nombre de la empresa].",
+        "Propuesta de mejora para la implementación de un sistema de costeo ABC en [nombre de la empresa].",
+        "Estrategias de control de gestión y presupuestación para mejorar la toma de decisiones en [nombre de la empresa].",
+        "Propuesta de mejora para la auditoría interna y los controles internos en [nombre de la empresa].",
+        "Estrategias para prevenir el fraude mediante un sistema de control interno en [nombre de la empresa].",
+        "Propuesta de mejora en la planificación fiscal corporativa de [nombre de la empresa].",
+        "Estrategias para optimizar las implicaciones fiscales en transacciones internacionales de [nombre de la empresa].",
+        "Propuesta de mejora para la implementación de software contable en [nombre de la empresa].",
+        "Estrategias de big data para mejorar la toma de decisiones contables en [nombre de la empresa]."
+    ],
+    "Master of Business Administration": [
+        "Propuesta de mejora en la formulación de estrategias competitivas en [nombre de la empresa].",
+        "Estrategias de crecimiento empresarial a largo plazo en [nombre de la empresa].",
+        "Propuesta de mejora para la optimización de la cadena de suministro en [nombre de la empresa].",
+        "Estrategias de mejora en la gestión de calidad total en los procesos operativos de [nombre de la empresa].",
+        "Propuesta de mejora en la implementación de metodologías ágiles en la gestión de proyectos de [nombre de la empresa].",
+        "Estrategias para mejorar el control y evaluación de proyectos en [nombre de la empresa].",
+        "Propuesta de mejora para el desarrollo de nuevos negocios en [nombre de la empresa].",
+        "Estrategias para la gestión de la innovación en productos y servicios de [nombre de la empresa].",
+        "Propuesta de mejora para la implementación de políticas de responsabilidad social corporativa en [nombre de la empresa].",
+        "Estrategias para fortalecer el buen gobierno corporativo en [nombre de la empresa]."
+    ],
+    "Master of Science in Hospitality Management": [
+        "Propuesta de mejora para la evaluación y control de la calidad del servicio en [nombre de la empresa].",
+        "Estrategias para mejorar la experiencia del cliente en [nombre de la empresa].",
+        "Propuesta de mejora en las estrategias de fijación de precios y análisis de demanda en [nombre de la empresa].",
+        "Estrategias para optimizar la gestión de ingresos en [nombre de la empresa].",
+        "Propuesta de mejora en la planificación de eventos turísticos en [nombre del destino].",
+        "Estrategias para promover el desarrollo sostenible de [nombre del destino turístico].",
+        "Propuesta de mejora en la capacitación y desarrollo del personal en [nombre de la empresa].",
+        "Estrategias para mejorar la retención y satisfacción del empleado en [nombre de la empresa].",
+        "Propuesta de mejora en la implementación de tecnologías emergentes en [nombre de la empresa].",
+        "Estrategias de big data para mejorar la toma de decisiones en [nombre de la empresa]."
+    ],
+    "Master of Science in Healthcare Management": [
+        "Propuesta de mejora en la planificación y gestión de presupuestos en [nombre de la organización de salud].",
+        "Estrategias para optimizar los costos y mejorar la eficiencia financiera en [nombre de la organización de salud].",
+        "Propuesta de mejora en el desarrollo de líderes en [nombre de la organización de salud].",
+        "Estrategias para mejorar la gestión del talento humano en [nombre de la organización de salud].",
+        "Propuesta de mejora para la implementación de un programa de mejora continua en [nombre de la organización de salud].",
+        "Estrategias para optimizar la evaluación y control de calidad en [nombre de la organización de salud].",
+        "Propuesta de mejora para la implementación de sistemas de telemedicina en [nombre de la organización de salud].",
+        "Estrategias para fortalecer la protección de datos y la ciberseguridad en [nombre de la organización de salud].",
+        "Propuesta de mejora para la implementación de políticas de salud pública en [nombre de la región].",
+        "Estrategias para mejorar la planificación y evaluación de programas de salud en [nombre de la región]."
+    ],
+    "Master of Science in Cybersecurity": [
+        "Propuesta de mejora para la seguridad de la infraestructura de red en [nombre de la empresa].",
+        "Estrategias de migración segura a entornos de nube en [nombre de la empresa].",
+        "Propuesta de mejora para el plan de respuesta a incidentes cibernéticos en [nombre de la empresa].",
+        "Estrategias de continuidad del negocio ante ataques de ransomware en [nombre de la empresa].",
+        "Propuesta de mejora en la implementación de protocolos de cifrado de datos en [nombre de la empresa].",
+        "Estrategias para garantizar la privacidad de datos de clientes en [nombre de la empresa].",
+        "Propuesta de mejora en el cumplimiento normativo de ciberseguridad en [nombre de la empresa].",
+        "Estrategias de gestión de riesgos tecnológicos basados en el marco NIST en [nombre de la empresa].",
+        "Propuesta de mejora mediante la ejecución de pruebas de penetración en los sistemas de [nombre de la empresa].",
+        "Estrategias de remediación de vulnerabilidades críticas en la infraestructura de [nombre de la empresa]."
+    ],
+    "Master of Science in Artificial Intelligence": [
+        "Propuesta de mejora en el análisis predictivo de ventas mediante Machine Learning en [nombre de la empresa].",
+        "Estrategias para la optimización de modelos de Deep Learning en el procesamiento de datos de [nombre de la empresa].",
+        "Propuesta de mejora en la atención al cliente mediante la implementación de chatbots inteligentes en [nombre de la empresa].",
+        "Estrategias para el análisis automático de opiniones de usuarios en [nombre de la empresa].",
+        "Propuesta de mejora en el control de calidad mediante sistemas de visión artificial en [nombre de la empresa].",
+        "Estrategias para el reconocimiento automático de patrones en la logística de [nombre de la empresa].",
+        "Propuesta de mejora para la mitigación de sesgos en los algoritmos de selección de personal en [nombre de la empresa].",
+        "Estrategias para asegurar la transparencia de los modelos de IA en [nombre de la empresa].",
+        "Propuesta de mejora para la automatización de procesos operativos mediante IA en [nombre de la empresa].",
+        "Estrategias para optimizar la toma de decisiones financieras utilizando sistemas inteligentes en [nombre de la empresa]."
+    ],
+    "Master of Science in Project Management": [
+        "Propuesta de mejora para la transición a metodologías ágiles en el departamento de TI de [nombre de la empresa].",
+        "Estrategias de implementación de modelos híbridos en la gestión de proyectos de construcción en [nombre de la empresa].",
+        "Propuesta de mejora para el análisis de riesgos en proyectos de infraestructura de [nombre de la empresa].",
+        "Estrategias para la mitigación de riesgos financieros en el portafolio de proyectos de [nombre de la empresa].",
+        "Propuesta de mejora para el funcionamiento de la Oficina de Gestión de Proyectos (PMO) en [nombre de la empresa].",
+        "Estrategias de alineación estratégica del portafolio de proyectos en [nombre de la empresa].",
+        "Propuesta de mejora en la gestión de stakeholders críticos para proyectos de [nombre de la empresa].",
+        "Estrategias para mejorar el liderazgo y la comunicación en equipos distribuidos de [nombre de la empresa].",
+        "Propuesta de mejora para la integración de prácticas sostenibles en la gestión de proyectos de [nombre de la empresa].",
+        "Estrategias para fortalecer la ética profesional en el ciclo de vida de los proyectos de [nombre de la empresa]."
+    ],
+    "Master of Science in Renewable Energy and Sustainability Systems": [
+        "Propuesta de mejora para la implementación de sistemas solares fotovoltaicos en las instalaciones de [nombre de la empresa].",
+        "Estrategias de optimización para el almacenamiento de energía renovable en [nombre de la empresa].",
+        "Propuesta de mejora para la eficiencia energética basada en una auditoría técnica en [nombre de la empresa].",
+        "Estrategias para la implementación de un sistema de gestión energética en [nombre de la empresa].",
+        "Propuesta de mejora para la integración de micro-redes eléctricas en [nombre de la comunidad/empresa].",
+        "Estrategias para la implementación de infraestructura de carga eléctrica en [nombre de la empresa].",
+        "Propuesta de mejora para la transición hacia un modelo de economía circular en los procesos de [nombre de la empresa].",
+        "Estrategias para la valorización de residuos industriales en [nombre de la empresa].",
+        "Propuesta de mejora para la reducción de la huella de carbono y acceso a bonos verdes en [nombre de la empresa].",
+        "Estrategias de cumplimiento de regulaciones ambientales internacionales en [nombre de la empresa]."
+    ],
+    "Master of Science in Criminal Justice": [
+        "Propuesta de mejora para el programa de prevención del delito comunitario en [nombre del municipio/región].",
+        "Estrategias de análisis delictivo para la reducción de la criminalidad en [nombre de la región].",
+        "Propuesta de mejora para el modelo de gestión penitenciaria en [nombre del centro penitenciario].",
+        "Estrategias de reinserción laboral para ex-convictos en [nombre de la ciudad/región].",
+        "Propuesta de mejora para los programas de justicia restaurativa juvenil en [nombre de la institución].",
+        "Estrategias para la prevención de la reincidencia en jóvenes infractores de [nombre de la región].",
+        "Propuesta de mejora en los protocolos de recolección de evidencia forense en [nombre de la institución judicial].",
+        "Estrategias para la optimización de la investigación criminal en delitos contra la propiedad en [nombre de la región].",
+        "Propuesta de mejora para la investigación y persecución del cibercrimen en [nombre de la unidad policial].",
+        "Estrategias de cooperación interinstitucional contra el crimen organizado en [nombre de la región]."
+    ]
+}

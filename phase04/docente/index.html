@@ -32,32 +32,32 @@
           <div
             class="orb orb-f1"
             data-bs-toggle="tooltip"
-            title="Fase 1: Base"
+            title="Fase 1: REGISTRO"
           ></div>
           <div
             class="orb orb-f2"
             data-bs-toggle="tooltip"
-            title="Fase 2: Prototipo"
+            title="Fase 2: GENERACIÓN DE MATERIAL"
           ></div>
           <div
             class="orb orb-f3"
             data-bs-toggle="tooltip"
-            title="Fase 3: Dictamen"
+            title="Fase 3: DESARROLLO DEL TRABAJO"
           ></div>
           <div
             class="orb orb-f4"
             data-bs-toggle="tooltip"
-            title="Fase 4: Preguntas"
+            title="Fase 4: REVISIÓN CON IA"
           ></div>
           <div
             class="orb orb-f5"
             data-bs-toggle="tooltip"
-            title="Fase 4.1: Video"
+            title="Fase 5: EXPOSICIÓN PRESENCIAL"
           ></div>
           <div
             class="orb orb-f6"
             data-bs-toggle="tooltip"
-            title="Fase 4.2: Final"
+            title="Fase 6: DICTAMEN FINAL"
           ></div>
         </div>
         <h2 class="splash-title">JVN ENGINE</h2>
@@ -206,11 +206,11 @@
                 <i class="fas fa-users me-2 text-primary"></i>Sustentaciones
               </h6>
 
-              <!-- Filtro de videos con margen adicional -->
+              <!-- Filtro con margen adicional -->
               <div
                 class="btn-group w-100 shadow-sm mb-3"
                 role="group"
-                aria-label="Filtro de videos"
+                aria-label="Filtro de registros"
               >
                 <button
                   type="button"
@@ -221,17 +221,31 @@
                 </button>
                 <button
                   type="button"
-                  class="btn btn-sm btn-outline-warning btn-filtro"
+                  class="btn btn-sm btn-outline-secondary btn-filtro"
                   data-filtro="pendiente"
                 >
-                  Pendientes
+                  Pends.
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-warning btn-filtro"
+                  data-filtro="correcciones"
+                >
+                  Correc.
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger btn-filtro"
+                  data-filtro="no_conforme"
+                >
+                  No Conf.
                 </button>
                 <button
                   type="button"
                   class="btn btn-sm btn-outline-success btn-filtro"
-                  data-filtro="calificado"
+                  data-filtro="conforme"
                 >
-                  Calificados
+                  Conf.
                 </button>
               </div>
 
@@ -347,7 +361,26 @@
                     <span>Trabajo PDF</span>
                   </a>
 
-                  <!-- Secuencia de 3 flechas/apuntes -->
+                  <!-- NUEVO: Flecha hacia Informe Anterior -->
+                  <div
+                    id="iconoFlechaAnterior"
+                    class="d-none d-flex gap-1 text-muted opacity-50"
+                  >
+                    <i class="fas fa-chevron-right small"></i>
+                  </div>
+
+                  <!-- NUEVO: Botón Informe Anterior -->
+                  <a
+                    id="btnVerInformeAnterior"
+                    href="#"
+                    target="_blank"
+                    class="square-btn btn-warning-minimal d-none"
+                  >
+                    <i class="fas fa-history fa-2x"></i>
+                    <span>Informe Anterior</span>
+                  </a>
+
+                  <!-- Secuencia de flechas final -->
                   <div
                     id="iconoFlecha"
                     class="d-none d-flex gap-1 text-muted opacity-50"
@@ -357,7 +390,7 @@
                     <i class="fas fa-chevron-right small"></i>
                   </div>
 
-                  <!-- Botón Informe (Icono cambiado de robot a documento) -->
+                  <!-- Botón Informe Actual -->
                   <a
                     id="btnVerInforme"
                     href="#"
@@ -365,7 +398,7 @@
                     class="square-btn btn-ia-minimal d-none"
                   >
                     <i class="fas fa-file-signature fa-2x"></i>
-                    <span>Informe Evaluativo - Modulo 5</span>
+                    <span>Informe Evaluativo</span>
                   </a>
                 </div>
               </div>

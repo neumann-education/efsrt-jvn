@@ -529,6 +529,7 @@ function cerrarSesion() {
 }
 
 // --- ACTUALIZACIÓN MANUAL DE DATOS ---
+// --- ACTUALIZACIÓN MANUAL DE DATOS ---
 async function cargarDatos() {
   Swal.fire({
     title: "Actualizando registros...",
@@ -551,13 +552,11 @@ async function cargarDatos() {
       renderizarLista(registrosGlobal);
     }
 
-    // Si había un estudiante seleccionado, actualizar sus datos sin recargar el video
+    // --- MODIFICACIÓN: Actualizar todo el panel derecho si hay un estudiante seleccionado ---
     if (selectedId) {
-      const reg = registrosGlobal.find((r) => r.id_pedido === selectedId);
-      if (reg) {
-        $("#inputNotaF5").val(reg.nota_fase5 || "");
-      }
+      seleccionarEstudiante(selectedId);
     }
+    // ----------------------------------------------------------------------------------------
 
     Swal.close();
   } catch (e) {
@@ -610,15 +609,24 @@ function renderizarLista(registros) {
   if (registros.length === 0) {
     html = `<div class="p-4 text-center text-muted small">No hay trabajos para evaluar.</div>`;
   } else {
-    // 1. Filtro por Estado (Basado en la existencia de nota_fase4)
+    // 1. Filtro por Estado (Basado en la columna conforme_fase4)
     let registrosFiltrados = [...registros];
     if (filtroActivo === "pendiente") {
       registrosFiltrados = registrosFiltrados.filter(
-        (reg) => !reg.nota_fase4 || reg.nota_fase4 === "",
+        (reg) => !reg.conforme_fase4 || reg.conforme_fase4 === "",
       );
-    } else if (filtroActivo === "calificado") {
+    } else if (filtroActivo === "correcciones") {
       registrosFiltrados = registrosFiltrados.filter(
-        (reg) => reg.nota_fase4 && reg.nota_fase4 !== "",
+        (reg) => reg.conforme_fase4 === "REINTENTO",
+      );
+    } else if (filtroActivo === "no_conforme") {
+      // <--- NUEVA LÓGICA
+      registrosFiltrados = registrosFiltrados.filter(
+        (reg) => reg.conforme_fase4 === "NO_CONFORME",
+      );
+    } else if (filtroActivo === "conforme") {
+      registrosFiltrados = registrosFiltrados.filter(
+        (reg) => reg.conforme_fase4 === "CONFORME",
       );
     }
 
@@ -676,6 +684,9 @@ function renderizarLista(registros) {
           bgConformidadClass = "bg-conforme";
         if (reg.conforme_fase4 === "NO_CONFORME")
           bgConformidadClass = "bg-noconforme";
+        if (reg.conforme_fase4 === "REINTENTO")
+          // <--- NUEVO
+          bgConformidadClass = "bg-reintento";
 
         const nombreGrupo =
           reg.grupo && reg.grupo !== "Individual" ? reg.grupo : "Individual";
@@ -741,22 +752,36 @@ function seleccionarEstudiante(id) {
 
   // Configurar Botones PDF e Informe IA y su flecha intermedia
   let hasPDF = reg.url_pdf_fase3 ? true : false;
+  let hasInformeAnterior = reg.url_doc_noconforme_fase4 ? true : false; // <--- NUEVO
   let hasInforme = reg.url_doc_fase4 ? true : false;
 
+  // 1. Mostrar/Ocultar Trabajo PDF
   if (hasPDF) {
     $("#btnVerPDF").attr("href", reg.url_pdf_fase3).removeClass("d-none");
   } else {
     $("#btnVerPDF").addClass("d-none");
   }
 
+  // 2. Mostrar/Ocultar Informe Anterior
+  if (hasInformeAnterior) {
+    $("#btnVerInformeAnterior")
+      .attr("href", reg.url_doc_noconforme_fase4)
+      .removeClass("d-none");
+    $("#iconoFlechaAnterior").removeClass("d-none");
+  } else {
+    $("#btnVerInformeAnterior").addClass("d-none");
+    $("#iconoFlechaAnterior").addClass("d-none");
+  }
+
+  // 3. Mostrar/Ocultar Informe Actual
   if (hasInforme) {
     $("#btnVerInforme").attr("href", reg.url_doc_fase4).removeClass("d-none");
   } else {
     $("#btnVerInforme").addClass("d-none");
   }
 
-  // Solo mostrar la flecha si ambos existen
-  if (hasPDF && hasInforme) {
+  // 4. Mostrar/Ocultar flecha final (entre PDF o InformeAnterior y el Informe Actual)
+  if ((hasPDF || hasInformeAnterior) && hasInforme) {
     $("#iconoFlecha").removeClass("d-none");
   } else {
     $("#iconoFlecha").addClass("d-none");
