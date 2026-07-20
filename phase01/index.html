@@ -95,15 +95,14 @@
             </div>
 
             <div class="field-group">
-              <label class="field-label"
-                >Correo Institucional
-                <span class="required-star">*</span></label
-              >
+              <label class="field-label">
+                Correo Institucional <span class="required-star">*</span>
+              </label>
               <input
                 type="email"
                 name="correo"
                 id="correo"
-                placeholder="ejemplo@neumann.global"
+                placeholder="ejemplo@neumann.edu.pe"
                 required
               />
             </div>
@@ -376,6 +375,19 @@
         if (currentStep === 0) {
           if (!form.reportValidity()) return;
 
+          // --- NUEVA VALIDACIÓN DE DOMINIO DE CORREO ---
+          const correoValor = document
+            .getElementById("correo")
+            .value.trim()
+            .toLowerCase();
+          if (!correoValor.endsWith("@neumann.edu.pe")) {
+            return Swal.fire(
+              "Correo No Permitido",
+              "Por favor, utiliza tu correo institucional terminado en <b>@neumann.edu.pe</b>",
+              "warning",
+            );
+          }
+
           // Validación estricta del DNI de 8 dígitos
           const dniValor = document.getElementById("dni").value.trim();
           if (!/^\d{8}$/.test(dniValor)) {
@@ -386,9 +398,9 @@
             );
           }
 
-          // Validación asíncrona del correo en el servidor
+          // Validación asíncrona del correo y DNI en el servidor
           const isDataValid = await validarDatosPersonalesFase1();
-          if (!isDataValid) return; // Si hay error, detiene el avance
+          if (!isDataValid) return;
         }
 
         if (currentStep === 1) {
