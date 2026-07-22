@@ -871,6 +871,25 @@
                   </div>
                 </div>
 
+                <div class="col-md-12 mb-3">
+                  <label class="form-label" for="edit_grupo"
+                    >Grupo / Modalidad</label
+                  >
+                  <select id="edit_grupo" class="form-select">
+                    <option value="Individual">Individual</option>
+                    <!-- Las opciones de Grupo 1 a 50 se pueden generar por JS o poner manualmente -->
+                    <optgroup label="Grupos">
+                      <script>
+                        for (let i = 1; i <= 50; i++) {
+                          document.write(
+                            `<option value="Grupo ${i}">Grupo ${i}</option>`,
+                          );
+                        }
+                      </script>
+                    </optgroup>
+                  </select>
+                </div>
+
                 <!-- Estados de Fases -->
                 <h6 class="text-primary fw-bold border-bottom pb-2 mb-3 mt-3">
                   <i class="fas fa-tasks me-1"></i> Control del Flujo de Fases

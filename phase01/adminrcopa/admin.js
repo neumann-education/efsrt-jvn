@@ -101,6 +101,7 @@ $("#formEditar").submit(async (e) => {
     correo: $("#edit_correo").val(),
     programa: $("#edit_prog").val(),
     tema: $("#edit_tema").val(),
+    grupo: $("#edit_grupo").val(),
     estado: $("#edit_estado").val(),
     estado_fase2: $("#edit_estado_fase2").val(),
     estado_fase3: $("#edit_estado_fase3").val(),
@@ -131,6 +132,7 @@ $("#formEditar").submit(async (e) => {
           correo: valores.correo,
           programa: valores.programa,
           tema: valores.tema,
+          grupo: valores.grupo,
           docente: valores.docente, // NUEVO: Actualizar docente en memoria local
           estado: valores.estado,
           estado_fase2: valores.estado_fase2,
@@ -1387,6 +1389,7 @@ function prepararEdicion(idPedido) {
   // Cargamos el tema directamente sin esperar a ninguna lista
   $("#edit_tema").val(reg.tema || "");
 
+  $("#edit_grupo").val(reg.grupo || "Individual");
   $("#edit_estado").val(reg.estado || "");
   $("#edit_estado_fase2").val(reg.estado_fase2 || "");
   $("#edit_estado_fase3").val(reg.estado_fase3 || "");
